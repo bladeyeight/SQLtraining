@@ -25,14 +25,14 @@ join orderdetails as d on p.productCode = d.productCode
 order by d.quantityOrdered desc;
 
 -- Question 5
-select CONCAT(e.lastName, ', ', e.firstName) as 'Sales Rep', count(o.orderNumber) as '# Orders', IFNULL(sum(d.quantityOrdered * d.priceEach), 0) as 'Total Sales'
+select CONCAT(e.lastName, ', ', e.firstName) as 'Sales Rep', count(o.orderNumber) as '# Orders', IFNULL(sum(d.quantityOrdered * d.priceEach), 0) as `Total Sales`
 from employees as e 
 left join customers as c on e.employeeNumber = c.salesRepEmployeeNumber 
 left join orders as o on c.customerNumber = o.customerNumber
 left join orderdetails as d on o.orderNumber = d.orderNumber
 where e.jobTitle = 'Sales Rep'
 group by CONCAT(e.lastName, ', ', e.firstName)
-order by (d.quantityOrdered * d.priceEach) desc;
+order by `Total Sales` desc;
 
 
 -- Question 6
@@ -40,7 +40,7 @@ select monthname(orderDate) as `Month`, replace(year(orderDate), ',', '') as `Ye
 from orders as o
 join orderdetails as d on o.ordernumber = d.orderNumber 
 join payments as p on o.customernumber = p.customernumber
-group by `Month`;
+group by `Year`, `Month`;
 
 
 
